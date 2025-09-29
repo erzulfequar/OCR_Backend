@@ -8,10 +8,15 @@ import fitz  # PyMuPDF
 # --------------------------
 # Tesseract & Poppler Config
 # --------------------------
-TESSERACT_CMD = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-pytesseract.pytesseract.tesseract_cmd = TESSERACT_CMD
-POPPLER_PATH = r"C:\poppler\poppler-25.07.0\Library\bin"
+import os
+import pytesseract
 
+# Tesseract setup
+TESSERACT_CMD = os.getenv("TESSERACT_CMD", r"C:\Program Files\Tesseract-OCR\tesseract.exe")
+pytesseract.pytesseract.tesseract_cmd = TESSERACT_CMD
+
+# Poppler setup for pdf2image
+POPPLER_PATH = os.getenv("POPPLER_PATH", r"C:\poppler\poppler-25.07.0\Library\bin")
 
 
 # --------------------------
