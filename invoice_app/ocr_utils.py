@@ -8,11 +8,10 @@ import fitz  # PyMuPDF
 # --------------------------
 # Tesseract & Poppler Config
 # --------------------------
-TESSERACT_CMD = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+# Use Linux paths for Render
+TESSERACT_CMD = os.getenv("TESSERACT_CMD", "/usr/bin/tesseract")
 pytesseract.pytesseract.tesseract_cmd = TESSERACT_CMD
-POPPLER_PATH = r"C:\poppler\poppler-25.07.0\Library\bin"
-
-
+POPPLER_PATH = os.getenv("POPPLER_PATH", "/usr/bin")  # Poppler installed via apt
 
 # --------------------------
 # OCR fallback functions
@@ -45,17 +44,10 @@ def ocr_pdf(pdf_path, lang="eng"):
 
     return text.strip() or "❌ No text found via OCR"
 
-
 # --------------------------
 # Universal extractor
 # --------------------------
 def extract_text(file_path, lang="eng"):
-    """
-    Universal extractor for PDFs and images.
-    1. Uses Gemini first.
-    2. Falls back to OCR if Gemini fails.
-    Returns structured JSON ready for table display.
-    """
     ext = os.path.splitext(file_path)[1].lower()
     if ext not in [".jpg", ".jpeg", ".png", ".pdf"]:
         return {"error": "❌ Unsupported file format. Please upload JPG, PNG, or PDF."}
@@ -72,7 +64,6 @@ def extract_text(file_path, lang="eng"):
             else:
                 raw_text = ocr_image(file_path, lang=lang)
 
-            # Return OCR result as a single item for table
             data = {
                 "items": [{"description": raw_text}],
                 "invoice_no": None,
