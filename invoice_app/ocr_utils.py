@@ -8,19 +8,10 @@ import fitz  # PyMuPDF
 # --------------------------
 # Tesseract & Poppler Config
 # --------------------------
-
-# Use environment variables first (for Render or Linux)
-TESSERACT_CMD = os.getenv("TESSERACT_CMD")
-if not TESSERACT_CMD:
-    # Fallback to Windows default path (local dev)
-    TESSERACT_CMD = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-
+TESSERACT_CMD = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 pytesseract.pytesseract.tesseract_cmd = TESSERACT_CMD
+POPPLER_PATH = r"C:\poppler\poppler-25.07.0\Library\bin"
 
-POPPLER_PATH = os.getenv("POPPLER_PATH")
-if not POPPLER_PATH:
-    # Fallback to local Poppler path (Windows)
-    POPPLER_PATH = r"C:\poppler\poppler-25.07.0\Library\bin"
 
 
 # --------------------------
